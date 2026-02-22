@@ -8,7 +8,7 @@ import PremiumFeatureCard from "./PremiumFeatureCard";
 import websiteImg from "@/assets/website.jpg";
 import mobileDevImg from "@/assets/mobile-dev.webp";
 import aiAutomationImg from "@/assets/ai-automation.jpg";
-import aiAgentImg from "@/assets/ai-agent.png";
+import aiAgentImg from "../assets/ai-agent.png";
 
 /* Services Data */
 const services = [
