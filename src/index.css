@@ -260,3 +260,22 @@
 .stroke-text {
   -webkit-text-stroke: 1px #9c2e2e;
 }
+
+/* Hide scrollbar mobile swipe */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

@@ -1,20 +1,17 @@
-import { Globe, Smartphone, Bot, BrainCircuit } from "lucide-react";
+import { useRef, useState } from "react";
 import AnimatedSection from "./animations/AnimatedSection";
 import AnimatedItem from "./animations/AnimatedItem";
-import PillCard from "./PillCard";
 import PremiumFeatureCard from "./PremiumFeatureCard";
 
-/* ✅ Import Images */
+/* Images */
 import websiteImg from "@/assets/website.jpg";
 import mobileDevImg from "@/assets/mobile-dev.webp";
 import aiAutomationImg from "@/assets/ai-automation.jpg";
 import aiAgentImg from "../assets/ai-agent.png";
 
-/* Services Data */
 const services = [
   {
     image: websiteImg,
-    label: "Web",
     title: "Modern Web Solutions",
     description:
       "We craft fast, modern websites designed to deliver exceptional user experiences.",
@@ -22,7 +19,6 @@ const services = [
   },
   {
     image: mobileDevImg,
-    label: "Mobile",
     title: "Mobile App Solutions",
     description:
       "We create scalable, high-performance mobile apps with beautiful interfaces.",
@@ -30,14 +26,12 @@ const services = [
   },
   {
     image: aiAutomationImg,
-    label: "Automation",
     title: "Smart AI Automation",
     description: "Smart AI-Powered Task Automation",
     href: "#",
   },
   {
     image: aiAgentImg,
-    label: "Intelligence",
     title: "Custom AI Agents",
     description: "Autonomous AI Assistants",
     href: "#",
@@ -45,50 +39,114 @@ const services = [
 ];
 
 const Services = () => {
+
+  const scrollRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  /* Detect active card */
+  const handleScroll = () => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const index = Math.round(
+      container.scrollLeft / container.offsetWidth
+    );
+
+    setActiveIndex(index);
+  };
+
   return (
-    <section id="services" className="py-20 sm:py-28 lg:py-40 bg-[#050505]">
-      <div className="section-container">
+    <section
+      id="services"
+      className="py-16 sm:py-24 lg:py-40 bg-[#050505]"
+    >
+      <div className="section-container px-4 sm:px-6">
+
         <AnimatedSection>
+
+          {/* ===== Heading ===== */}
           <AnimatedItem>
-            <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-              <p className="section-label justify-center mb-4">
+            <div className="text-center mb-10 sm:mb-16 lg:mb-20">
+              <p className="section-label justify-center mb-3">
                 Our Services
               </p>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-semibold text-white leading-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-[44px] font-semibold text-white">
                 Thoughtful Digital{" "}
-                <span className="text-primary">Strategies</span>
+                <span className="text-primary">
+                  Strategies
+                </span>
               </h2>
-
-              <p className="mt-4 text-base text-[#a1a1aa] max-w-2xl mx-auto">
-                We build secure, reliable, and scalable digital solutions for
-                small and large businesses, powered by modern software
-                engineering and intelligent automation.
-              </p>
             </div>
           </AnimatedItem>
 
-          {/* Services Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {/* ================= MOBILE SWIPE ================= */}
+          <div className="sm:hidden">
+
+            <div
+              ref={scrollRef}
+              onScroll={handleScroll}
+              className="
+                flex
+                gap-4
+                overflow-x-auto
+                snap-x snap-mandatory
+                scrollbar-hide
+                pb-4
+              "
+            >
+              {services.map((service, index) => (
+                <div
+                  key={index}
+                  className="
+                    min-w-[100%]
+                    snap-center
+                    flex-shrink-0
+                  "
+                >
+                  <PremiumFeatureCard {...service} />
+                </div>
+              ))}
+            </div>
+
+            {/* ===== DOT INDICATOR ===== */}
+            <div className="flex justify-center gap-2 mt-4">
+              {services.map((_, index) => (
+                <div
+                  key={index}
+                  className={`
+                    rounded-full transition-all duration-300
+                    ${
+                      activeIndex === index
+                        ? "w-6 h-2 bg-primary"
+                        : "w-2 h-2 bg-white/30"
+                    }
+                  `}
+                />
+              ))}
+            </div>
+
+          </div>
+
+          {/* ================= DESKTOP GRID ================= */}
+          <div className="hidden sm:grid grid-cols-2 gap-6">
             {services.map((service, index) => {
               const isFullWidth = index < 2;
 
               return (
                 <div
                   key={index}
-                  className={isFullWidth ? "sm:col-span-2" : ""}
+                  className={isFullWidth ? "col-span-2" : ""}
                 >
                   <PremiumFeatureCard
-                    title={service.title}
-                    description={service.description}
-                    image={service.image}
-                    href={service.href}
+                    {...service}
                     variant={isFullWidth ? "full" : "half"}
                   />
                 </div>
               );
             })}
           </div>
+
         </AnimatedSection>
       </div>
     </section>
