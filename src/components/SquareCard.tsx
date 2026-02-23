@@ -36,7 +36,7 @@ const SquareCard = ({
           alt={title}
           className="
             w-full h-full object-cover
-            opacity-90
+            opacity-30
             transition-all duration-700
             group-hover:scale-105
             group-hover:opacity-60
