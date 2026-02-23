@@ -1,4 +1,3 @@
-import { useRef, useState } from "react";
 import AnimatedSection from "./animations/AnimatedSection";
 import AnimatedItem from "./animations/AnimatedItem";
 import PremiumFeatureCard from "./PremiumFeatureCard";
@@ -7,7 +6,9 @@ import PremiumFeatureCard from "./PremiumFeatureCard";
 import websiteImg from "@/assets/website.jpg";
 import mobileDevImg from "@/assets/mobile-dev.webp";
 import aiAutomationImg from "@/assets/ai-automation.jpg";
-import aiAgentImg from "../assets/ai-agent.png";
+import aiAgentImg from "@/assets/ai-agent.png";
+
+/* ================= SERVICES DATA ================= */
 
 const services = [
   {
@@ -39,22 +40,6 @@ const services = [
 ];
 
 const Services = () => {
-
-  const scrollRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  /* Detect active card */
-  const handleScroll = () => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const index = Math.round(
-      container.scrollLeft / container.offsetWidth
-    );
-
-    setActiveIndex(index);
-  };
-
   return (
     <section
       id="services"
@@ -64,72 +49,48 @@ const Services = () => {
 
         <AnimatedSection>
 
-          {/* ===== Heading ===== */}
+          {/* ================= HEADING ================= */}
           <AnimatedItem>
             <div className="text-center mb-10 sm:mb-16 lg:mb-20">
+
               <p className="section-label justify-center mb-3">
                 Our Services
               </p>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-[44px] font-semibold text-white">
+              <h2 className="
+                text-2xl
+                sm:text-3xl
+                lg:text-[44px]
+                font-semibold
+                text-white
+                leading-snug
+              ">
                 Thoughtful Digital{" "}
                 <span className="text-primary">
                   Strategies
                 </span>
               </h2>
+
             </div>
           </AnimatedItem>
 
-          {/* ================= MOBILE SWIPE ================= */}
-          <div className="sm:hidden">
+          {/* ================= MOBILE STACK ================= */}
+        <div className="sm:hidden flex flex-col gap-4">
 
-            <div
-              ref={scrollRef}
-              onScroll={handleScroll}
-              className="
-                flex
-                gap-4
-                overflow-x-auto
-                snap-x snap-mandatory
-                scrollbar-hide
-                pb-4
-              "
-            >
-              {services.map((service, index) => (
-                <div
-                  key={index}
-                  className="
-                    min-w-[100%]
-                    snap-center
-                    flex-shrink-0
-                  "
-                >
+            {services.map((service, index) => (
+              <AnimatedItem key={index}>
+                {/* Increased visual height */}
+                
                   <PremiumFeatureCard {...service} />
-                </div>
-              ))}
-            </div>
-
-            {/* ===== DOT INDICATOR ===== */}
-            <div className="flex justify-center gap-2 mt-4">
-              {services.map((_, index) => (
-                <div
-                  key={index}
-                  className={`
-                    rounded-full transition-all duration-300
-                    ${
-                      activeIndex === index
-                        ? "w-6 h-2 bg-primary"
-                        : "w-2 h-2 bg-white/30"
-                    }
-                  `}
-                />
-              ))}
-            </div>
+                
+              </AnimatedItem>
+            ))}
 
           </div>
 
           {/* ================= DESKTOP GRID ================= */}
-          <div className="hidden sm:grid grid-cols-2 gap-6">
+          <div className="hidden sm:grid grid-cols-2 gap-3">
+
             {services.map((service, index) => {
               const isFullWidth = index < 2;
 
@@ -145,6 +106,7 @@ const Services = () => {
                 </div>
               );
             })}
+
           </div>
 
         </AnimatedSection>
